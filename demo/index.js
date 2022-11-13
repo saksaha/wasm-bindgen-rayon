@@ -11,52 +11,56 @@
  * limitations under the License.
  */
 
-import * as Comlink from 'comlink';
+import * as Comlink from "comlink";
 
-const maxIterations = 1000;
+// const maxIterations = 1000;
 
-const canvas = document.getElementById('canvas');
-const { width, height } = canvas;
-const ctx = canvas.getContext('2d');
-const timeOutput = document.getElementById('time');
+// const canvas = document.getElementById("canvas");
+// const { width, height } = canvas;
+// const ctx = canvas.getContext("2d");
+// const timeOutput = document.getElementById("time");
 
 console.log(111);
 
 (async function init() {
   // Create a separate thread from wasm-worker.js and get a proxy to its handlers.
   let handlers = await Comlink.wrap(
-    new Worker(new URL('./wasm-worker.js', import.meta.url), {
-      type: 'module'
+    new Worker(new URL("./wasm-worker.js", import.meta.url), {
+      type: "module",
     })
   ).handlers;
 
-  console.log(11);
+  console.log(112, handlers);
 
   function setupBtn(id) {
-
     // Handlers are named in the same way as buttons.
     let handler = handlers[id];
+
+    console.log(11, handler);
     // If handler doesn't exist, it's not supported.
     if (!handler) return;
     // Assign onclick handler + enable the button.
     Object.assign(document.getElementById(id), {
       async onclick() {
-        console.log(22);
-        let { rawImageData, time } = await handler({
-          width,
-          height,
-          maxIterations
-        });
-        timeOutput.value = `${time.toFixed(2)} ms`;
-        const imgData = new ImageData(rawImageData, width, height);
-        ctx.putImageData(imgData, 0, 0);
+        console.log(212, handler);
+        let b = await handler(4);
+        console.log(33, b);
+        // let { rawImageData, time } = await handler({
+        //   width,
+        //   height,
+        //   maxIterations
+        // });
+        // timeOutput.value = `${time.toFixed(2)} ms`;
+        // const imgData = new ImageData(rawImageData, width, height);
+        // ctx.putImageData(imgData, 0, 0);
       },
-      disabled: false
+      disabled: false,
     });
   }
 
-  setupBtn('singleThread');
+  // setupBtn("singleThread");
   if (await handlers.supportsThreads) {
-    setupBtn('multiThread');
+    console.log(221, "multiThread");
+    setupBtn("multiThread");
   }
 })();
