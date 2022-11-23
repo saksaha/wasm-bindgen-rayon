@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 module.exports = {
-  mode: "development",
+  mode: "production",
   entry: {
     // main: path.resolve(__dirname, "index.ts"),
     main: path.resolve(__dirname, "index.js"),
@@ -29,9 +29,4 @@ module.exports = {
       "Cross-Origin-Opener-Policy": "same-origin",
     },
   },
-  plugins: [
-    new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: 1,
-    }),
-  ],
 };
