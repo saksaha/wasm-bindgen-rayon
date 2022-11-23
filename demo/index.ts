@@ -15,29 +15,31 @@ import * as Comlink from "comlink";
 
 const maxIterations = 1000;
 
-const canvas = document.getElementById("canvas");
-const { width, height } = canvas;
-const ctx = canvas.getContext("2d");
-const timeOutput = document.getElementById("time");
+const canvas = document.getElementById("canvas") as any;
+const { width, height } = canvas as any;
+const ctx = canvas.getContext("2d") as any;
+const timeOutput = document.getElementById("time") as any;
 
 (async function init() {
   // Create a separate thread from wasm-worker.js and get a proxy to its handlers.
-  let handlers = await Comlink.wrap(
-    new Worker(new URL("./wasm-worker.js", import.meta.url), {
-      type: "module",
-    })
+  let handlers = (
+    (await Comlink.wrap(
+      new Worker(new URL("./wasm-worker.js", import.meta.url), {
+        type: "module",
+      })
+    )) as any
   ).handlers;
 
   console.log(11, handlers);
   console.log(113, await handlers.supportsThreads);
 
-  function setupBtn(id) {
+  function setupBtn(id: any) {
     // Handlers are named in the same way as buttons.
     let handler = handlers[id];
     // If handler doesn't exist, it's not supported.
     if (!handler) return;
     // Assign onclick handler + enable the button.
-    Object.assign(document.getElementById(id), {
+    Object.assign(document.getElementById(id) as any, {
       async onclick() {
         let { rawImageData, time } = await handler({
           width,
