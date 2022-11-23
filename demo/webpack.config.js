@@ -4,8 +4,8 @@ const webpack = require("webpack");
 module.exports = {
   mode: "production",
   entry: {
-    // main: path.resolve(__dirname, "index.ts"),
-    main: path.resolve(__dirname, "index.js"),
+    main: path.resolve(__dirname, "index.ts"),
+    // main: path.resolve(__dirname, "index.js"),
   },
   module: {
     rules: [

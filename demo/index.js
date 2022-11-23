@@ -20,6 +20,8 @@ const { width, height } = canvas;
 const ctx = canvas.getContext("2d");
 const timeOutput = document.getElementById("time");
 
+console.log("index.js");
+
 (async function init() {
   // Create a separate thread from wasm-worker.js and get a proxy to its handlers.
   let handlers = await Comlink.wrap(
@@ -28,8 +30,8 @@ const timeOutput = document.getElementById("time");
     })
   ).handlers;
 
-  console.log(11, handlers);
-  console.log(113, await handlers.supportsThreads);
+  console.log("init() 22", handlers);
+  console.log("init() 33", await handlers.supportsThreads);
 
   function setupBtn(id) {
     // Handlers are named in the same way as buttons.
